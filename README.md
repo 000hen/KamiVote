@@ -1,4 +1,8 @@
 # KamiVote
+
+![[](https://discord.com/api/oauth2/authorize?client_id=980094794091089961&permissions=2147683328&scope=bot%20applications.commands)](https://img.shields.io/badge/Discord-Invite%20KamiVote-green)
+![](https://img.shields.io/github/license/000hen/KamiVote)
+
 這是一個基於Discord.js的簡單投票機器人，可以讓你的群組成員投票，並且可以設定投票時間。
 
 ## 特色
