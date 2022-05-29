@@ -73,7 +73,7 @@ global.editResult = async (id) => {
         });
 
         voteOptions.forEach((option) => {
-            embed.addField(option.value, `**${voteCount[option.id].count}** 票 (${(voteCount[option.id].count / vote.voters.length) * 100}%)`);
+            embed.addField(option.value, `**${voteCount[option.id].count}** 票 (${((voteCount[option.id].count / vote.voters.length) * 100).toFixed(2)}%)`);
         });
 
         embed.addField(`投票人數`, `${voteResults.length} 人`, true);
@@ -97,6 +97,7 @@ global.editResult = async (id) => {
 }
 
 global.votes.forEach((e) => {
+    if (!e.expiredAt) return;
     if (e.expiredAt < Date.now()) {
         global.editResult(e.voteID);
         return;

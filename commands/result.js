@@ -50,7 +50,7 @@ module.exports = {
         
         vote.options.forEach(option => {
             const voters = vote.voters.filter(vote => vote.optionID === option.id);
-            embed.addField(option.value, `**${voters.length}** 票 (${(voters.length / vote.voters.length) * 100}%)`, true);
+            embed.addField(option.value, `**${voters.length}** 票 (${((voters.length / vote.voters.length) * 100).toFixed(2)}%)`, true);
         });
 
         interaction.reply({
