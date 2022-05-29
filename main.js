@@ -76,15 +76,17 @@ global.editResult = async (id) => {
         embed.addField(`投票人數`, `${voteResults.length} 人`, true);
         embed.addField(`投票人`, vters, true);
 
-        var guild = await client.guilds.fetch(vote.serverID);
-        var channel = await guild.channels.fetch(vote.channelID);
-        var message = await channel.messages.fetch(vote.msgID);
-        message.edit({
-            embeds: [embed],
-            components: []
-        });
+        try {
+            var guild = await client.guilds.fetch(vote.serverID);
+            var channel = await guild.channels.fetch(vote.channelID);
+            var message = await channel.messages.fetch(vote.msgID);
+            message.edit({
+                embeds: [embed],
+                components: []
+            });
 
-        message.reply(`投票已結束`);
+            message.reply(`投票已結束`);
+        } catch (e) { };
 
         global.saveVoteResult(id);
         global.votes.splice(global.votes.findIndex(vote => vote.voteID == id), 1);
