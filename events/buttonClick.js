@@ -35,7 +35,7 @@ module.exports = {
             }
         } else if (userVote !== -1) {
             interaction.reply({
-                content: `您已經投給 \`${vote.options[userVote].value}\` 了!`,
+                content: `您已經投給 \`${vote.options.find(e => e.id === vote.voters[userVote].optionID).value}\` 了!`,
                 ephemeral: true
             });
         }
