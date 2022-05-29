@@ -84,6 +84,8 @@ global.editResult = async (id) => {
             components: []
         });
 
+        message.reply(`投票已結束`);
+
         global.saveVoteResult(id);
         global.votes.splice(global.votes.findIndex(vote => vote.voteID == id), 1);
     }
