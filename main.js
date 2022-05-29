@@ -34,9 +34,12 @@ global.votes.splice = (e, i) => {
     Array.prototype.splice.call(global.votes, e, i);
     global.votes.save();
 }
-global.saveVoteResult = (id) => {
+global.saveVoteResult = (id, serverID) => {
     var vote = global.votes.find(vote => vote.voteID === id);
-    fs.writeFileSync(`storaged/vote-${id}.json`, JSON.stringify(vote));
+    if (!fs.existsSync(`storaged/${serverID}`)) {
+        fs.mkdirSync(`storaged/${serverID}`);
+    }
+    fs.writeFileSync(`storaged/${serverID}/vote-${id}.json`, JSON.stringify(vote));
 }
 global.editResult = async (id) => {
     var vts = [...global.votes];
@@ -88,7 +91,7 @@ global.editResult = async (id) => {
             message.reply(`投票已結束`);
         } catch (e) { };
 
-        global.saveVoteResult(id);
+        global.saveVoteResult(id, vote.serverID);
         global.votes.splice(global.votes.findIndex(vote => vote.voteID == id), 1);
     }
 }

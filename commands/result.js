@@ -1,5 +1,6 @@
-const { MessageActionRow, MessageButton, MessageEmbed } = require('discord.js');
+const { MessageEmbed } = require('discord.js');
 const { SlashCommandBuilder } = require('@discordjs/builders');
+const fs = require('fs');
 
 module.exports = {
     name: "result",
@@ -13,7 +14,11 @@ module.exports = {
                 .setRequired(true)),
     execute: async (interaction) => {
         const voteID = interaction.options.getString("voteid");
-        const vote = global.votes.find(vote => vote.voteID === voteID);
+        var vote = global.votes.find(vote => vote.voteID === voteID);
+
+        if (fs.existsSync(`./storaged/${interaction.guild.id}/vote-${voteID}.json`) && !vote) {
+            vote = JSON.parse(fs.readFileSync(`./storaged/${interaction.guild.id}/vote-${voteID}.json`));
+        }
 
         if (!vote) {
             interaction.reply({
