@@ -170,6 +170,7 @@ module.exports = {
             var msgData = {
                 voteID,
                 msgID: msg.id,
+                serverID: interaction.channel.guild.id,
                 title: interaction.options.getString('title'),
                 channelID: interaction.channel.id,
                 options: options,

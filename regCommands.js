@@ -28,18 +28,19 @@ const commands = [];
         },
     );
 
-    rest.get(Routes.applicationGuildCommands(clientID, "698551378246631436"))
-        .then(data => {
-            const promises = [];
-            for (const command of data) {
-                const deleteUrl = `${Routes.applicationGuildCommands(clientID, "698551378246631436")}/${command.id}`;
-                promises.push(rest.delete(deleteUrl));
-            }
-            return Promise.all(promises);
-        });
+    // For Testing
+    // rest.get(Routes.applicationGuildCommands(clientID, config.guildid))
+    //     .then(data => {
+    //         const promises = [];
+    //         for (const command of data) {
+    //             const deleteUrl = `${Routes.applicationGuildCommands(clientID, config.guildid)}/${command.id}`;
+    //             promises.push(rest.delete(deleteUrl));
+    //         }
+    //         return Promise.all(promises);
+    //     });
 
     // await rest.put(
-    //     Routes.applicationGuildCommands(clientID, "698551378246631436"), {
+    //     Routes.applicationGuildCommands(clientID, config.guildid), {
     //         body: commands
     //     }
     // );

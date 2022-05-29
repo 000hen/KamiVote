@@ -38,7 +38,7 @@ global.saveVoteResult = (id) => {
     var vote = global.votes.find(vote => vote.voteID === id);
     fs.writeFileSync(`storaged/vote-${id}.json`, JSON.stringify(vote));
 }
-global.editResult = (id) => {
+global.editResult = async (id) => {
     var vts = [...global.votes];
     var vote = vts.find(vote => vote.voteID == id);
     if (vote) {
@@ -51,26 +51,37 @@ global.editResult = (id) => {
         var voteOptions = vote.options;
         var voteResults = vote.voters;
         var voteCount = {};
+        var vters = "";
 
         voteOptions.forEach(option => {
-            voteCount[option.value] = 0;
+            voteCount[option.id] = {
+                name: option.value,
+                count: 0
+            };
         });
 
-        voteResults.forEach(result => {
-            voteCount[result]++;
+        voteResults.forEach((result, index) => {
+            voteCount[result.optionID].count++;
+            if (index !== voteResults.length - 1) {
+                vters += `${result.userTag}, `;
+            } else {
+                vters += `${result.userTag}`;
+            }
         });
 
-        voteOptions.forEach(option => {
-            embed.addField(option.value, `${voteCount[option.value]} 票`, true);
+        voteOptions.forEach((option) => {
+            embed.addField(option.value, `**${voteCount[option.id].count}** 票`);
         });
 
-        client.channels.cache.fetch(vote.channelID).then(channel => {
-            channel.fetch(vote.messageID).then(message => {
-                message.edit({
-                    embeds: [embed],
-                    components: []
-                });
-            });
+        embed.addField(`投票人數`, `${voteResults.length} 人`, true);
+        embed.addField(`投票人`, vters, true);
+
+        var guild = await client.guilds.fetch(vote.serverID);
+        var channel = await guild.channels.fetch(vote.channelID);
+        var message = await channel.messages.fetch(vote.msgID);
+        message.edit({
+            embeds: [embed],
+            components: []
         });
 
         global.saveVoteResult(id);

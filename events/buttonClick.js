@@ -24,6 +24,7 @@ module.exports = {
             } else {
                 vote.voters.push({
                     userID: interaction.user.id,
+                    userTag: interaction.user.tag,
                     optionID: interaction.customId
                 });
                 interaction.reply({

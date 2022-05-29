@@ -1,4 +1,5 @@
 {
     "token": "Your Discord BOT token here",
-    "appid": "Your Discord BOT's app id here"
+    "appid": "Your Discord BOT's app id here",
+    "guildif": "Your Discord BOT's guild id here"
 }
